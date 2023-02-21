@@ -14,24 +14,24 @@ public class ProductMapper extends ConfigurableMapper {
 	@Override
 	protected void configureFactoryBuilder(DefaultMapperFactory.Builder factoryBuilder) {
 		factoryBuilder.propertyResolverStrategy(new RegexPropertyResolver(
-			"get|is|has([\\w]+)",
-			"set([\\w]+)",
-			true, true));
-    }
+				"get|is|has([\\w]+)",
+				"set([\\w]+)",
+				true, true));
+	}
 
 	@Override
-    protected void configure(MapperFactory factory) {
-	    factory.classMap(Product.class, ProductDto.class)
-	      .field("id", "id")
-	      .field("productName", "productName")
-		  .field("status", "status")
-		  .field("stock.totalStock", "totalStock")
-          .field("createdAt", "createdAt")
-          .field("createdBy", "createdBy")
-          .field("updatedAt", "updatedAt")
-          .field("updatedBy", "updatedBy")
-		  .field("deleted", "deleted")
-	      .byDefault()
-	      .register();      
+	protected void configure(MapperFactory factory) {
+		factory.classMap(Product.class, ProductDto.class)
+				.field("id", "id")
+				.field("productName", "productName")
+				.field("status", "status")
+				.field("stock.totalStock", "totalStock")
+				.field("createdAt", "createdAt")
+				.field("createdBy", "createdBy")
+				.field("updatedAt", "updatedAt")
+				.field("updatedBy", "updatedBy")
+				.field("deleted", "deleted")
+				.byDefault()
+				.register();
 	}
 }

@@ -9,7 +9,7 @@ import id.cranium.erp.master.validator.constraint.MasterProductIsExists;
 import id.cranium.erp.starter.exception.DataNotFoundException;
 
 public class MasterProductIsExistsValidator implements ConstraintValidator<MasterProductIsExists, Long> {
-    
+
     @Autowired
     private ProductService productService;
 
@@ -23,7 +23,7 @@ public class MasterProductIsExistsValidator implements ConstraintValidator<Maste
         try {
             productService.findById(productId);
             return true;
-        }catch (DataNotFoundException e){
+        } catch (DataNotFoundException e) {
             return false;
         }
     }

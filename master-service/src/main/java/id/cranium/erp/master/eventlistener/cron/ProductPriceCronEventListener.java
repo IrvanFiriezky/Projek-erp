@@ -26,21 +26,22 @@ public class ProductPriceCronEventListener extends CronEventListener {
 
     @Autowired
     private ProductService productService;
-    
-    @EventListener({ProductPriceCronEvent.class})
+
+    @EventListener({ ProductPriceCronEvent.class })
     public void handler(CronEvent cronEvent) {
-         
+
         ProductPriceCronEvent event = (ProductPriceCronEvent) cronEvent;
         setRequestId(event);
         UserAuthInfo.setCronUserAuthInfo(event);
 
-        log.info("Cron ProductPriceCronEventListener execute: " + UserAuthInfo.getUserAuthInfo() + " - " + event.getJobId());
+        log.info("Cron ProductPriceCronEventListener execute: " + UserAuthInfo.getUserAuthInfo() + " - "
+                + event.getJobId());
 
         ProductUpdateDto productUpdateDto = ProductUpdateDto.builder()
-            .productName(event.getProductName())
-            .version(event.getVersion())
-            .build();
-        
+                .productName(event.getProductName())
+                .version(event.getVersion())
+                .build();
+
         String status = NotificationCronStatus.SUCCESS.getValue();
         String message = "";
         try {
@@ -51,9 +52,9 @@ public class ProductPriceCronEventListener extends CronEventListener {
         }
 
         NotificationCronDto notificationCronDto = NotificationCronDto.builder()
-            .status(status)
-            .message(message)
-            .build();
+                .status(status)
+                .message(message)
+                .build();
         notificationCronService.sendNotificationCron(event, notificationCronDto);
     }
 

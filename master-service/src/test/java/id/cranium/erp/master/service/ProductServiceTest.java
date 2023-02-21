@@ -41,20 +41,20 @@ public class ProductServiceTest extends MasterSpringBootTest {
     void testCreateProduct() throws DataNotFoundException {
         String productName = "Test Create Product";
         Long totalStock = 15L;
-        
+
         ProductCreateDto productCreateDto = ProductCreateDto.builder()
-            .productName(productName)
-            .totalStock(totalStock)
-            .build();
-        
+                .productName(productName)
+                .totalStock(totalStock)
+                .build();
+
         ProductDto productDto = productService.createProduct(productCreateDto);
         assertEquals(productDto.getProductName(), productName);
         assertEquals(productDto.getTotalStock(), totalStock);
 
         assertEquals(1, applicationEvents
-            .stream(ProductCreateEvent.class)
-            .filter(event -> event.getProductName().equals(productName))
-            .count());
+                .stream(ProductCreateEvent.class)
+                .filter(event -> event.getProductName().equals(productName))
+                .count());
     }
 
     @Test
@@ -63,31 +63,32 @@ public class ProductServiceTest extends MasterSpringBootTest {
         String productName = "Test Update Product";
 
         ProductUpdateDto productUpdateDto = ProductUpdateDto.builder()
-            .productName(productName)
-            .version(1L)
-            .build();
+                .productName(productName)
+                .version(1L)
+                .build();
 
         ProductDto productDto = productService.updateProduct(productUpdateDto, productId);
         assertEquals(productDto.getProductName(), productName);
     }
 
     @Test
-    void testUpdateProductThrowException() throws DataNotFoundException, DataLockException, ObjectOptimisticLockingFailureException {
+    void testUpdateProductThrowException()
+            throws DataNotFoundException, DataLockException, ObjectOptimisticLockingFailureException {
         Long productId = 2L;
         String productName = "Test Update Product";
 
         ProductUpdateDto productUpdateDto = ProductUpdateDto.builder()
-            .productName(productName)
-            .version(2L)
-            .build();
-        
+                .productName(productName)
+                .version(2L)
+                .build();
+
         Exception exception = assertThrows(DataLockException.class, () -> {
             ProductDto productDto = productService.updateProduct(productUpdateDto, productId);
         });
-        
+
         String expectedMessage = "Database version: 1, Current version: 2";
         String actualMessage = exception.getMessage();
-    
+
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
@@ -103,14 +104,14 @@ public class ProductServiceTest extends MasterSpringBootTest {
     @Test
     void testfindByIdThrowException() throws DataNotFoundException {
         Long productId = 10L;
-        
+
         Exception exception = assertThrows(DataNotFoundException.class, () -> {
             ProductDto productDto = productService.findById(productId);
         });
-        
+
         String expectedMessage = "Produk dengan id 10 tidak ada";
         String actualMessage = exception.getMessage();
-    
+
         assertTrue(actualMessage.contains(expectedMessage));
     }
 }

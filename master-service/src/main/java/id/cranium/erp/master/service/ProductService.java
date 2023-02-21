@@ -31,86 +31,91 @@ import id.cranium.erp.starter.exception.DataLockException;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
+	private final ProductRepository productRepository;
+	private final ProductMapper productMapper;
 	private final StarterUserScopeService starterUserScopeService;
 	private final ApplicationEventPublisher productPublisher;
 
 	@Autowired
-    private ResourceBundleMessageSource masterMessageSource;
+	private ResourceBundleMessageSource masterMessageSource;
 
 	private String MASTER_PRODUCT_FINDID_NOTFOUND = "master.product.findid.notfound";
 
-	@Transactional(value="masterTransactionManager")
+	@Transactional(value = "masterTransactionManager")
 	public ProductDto createProduct(ProductCreateDto productCreateDto) throws DataNotFoundException {
- 
+
 		log.info("TESTING: ProductService - createProduct");
-		
+
 		Product product = Product.builder()
-			.productName(productCreateDto.getProductName())
-			.status(ProductStatus.ACTIVE.getValue())
-			.build();
-		
+				.productName(productCreateDto.getProductName())
+				.status(ProductStatus.ACTIVE.getValue())
+				.build();
+
 		Stock stock = Stock.builder()
-			.totalStock(productCreateDto.getTotalStock())
-			.product(product)
-			.build();
-		//stock = stockRepository.save(stock);
+				.totalStock(productCreateDto.getTotalStock())
+				.product(product)
+				.build();
+		// stock = stockRepository.save(stock);
 
 		product.setStock(stock);
 		product = productRepository.save(product);
 
 		ProductCreateEvent productCreateEvent = ProductCreateEvent.builder()
-			.xUserId(UserAuthInfo.getUserId())
-			.xRequestId(MDC.get(CorrelationConfiguration.REQUEST_ID_HEADER_NAME))
-			.id(product.getId())
-			.productName(product.getProductName())
-			.build();
+				.xUserId(UserAuthInfo.getUserId())
+				.xRequestId(MDC.get(CorrelationConfiguration.REQUEST_ID_HEADER_NAME))
+				.id(product.getId())
+				.productName(product.getProductName())
+				.build();
 		productPublisher.publishEvent(productCreateEvent);
-		
+
 		return productMapper.map(product, ProductDto.class);
- 
+
 	}
 
-	@Transactional(value="masterTransactionManager", readOnly=true)
+	@Transactional(value = "masterTransactionManager", readOnly = true)
 	public ProductDto findById(Long id) throws DataNotFoundException {
 
 		log.info("TESTING: ProductService - findById");
- 
+
 		Optional<Product> product;
 		if (starterUserScopeService.getMyScopeValue("MASTER_PRODUCT_OWN").equals(Long.toString(UserAuthInfo.getUserId()))) {
 			product = productRepository.findByIdAndCreatedBy(id, UserAuthInfo.getUserId());
 		} else {
 			product = productRepository.findById(id);
 		}
-		
+
 		if (product.isEmpty()) {
-			throw new DataNotFoundException(masterMessageSource.getMessage(MASTER_PRODUCT_FINDID_NOTFOUND, new Object[]{id}, LocaleContextHolder.getLocale()));
+			throw new DataNotFoundException(masterMessageSource.getMessage(MASTER_PRODUCT_FINDID_NOTFOUND,
+					new Object[] { id }, LocaleContextHolder.getLocale()));
 		}
 		return productMapper.map(product.get(), ProductDto.class);
- 
+
 	}
 
-	@Transactional(value="masterTransactionManager")
-	public ProductDto updateProduct(ProductUpdateDto productUpdateDto, Long id) throws DataNotFoundException, DataLockException, ObjectOptimisticLockingFailureException {
- 
+	@Transactional(value = "masterTransactionManager")
+	public ProductDto updateProduct(ProductUpdateDto productUpdateDto, Long id)
+			throws DataNotFoundException, DataLockException, ObjectOptimisticLockingFailureException {
+
 		log.info("TESTING: ProductService - updateProduct");
 
 		Product product;
 		if (starterUserScopeService.getMyScopeValue("MASTER_PRODUCT_OWN").equals(Long.toString(UserAuthInfo.getUserId()))) {
 			product = productRepository.findWithLockingByIdAndCreatedBy(id, UserAuthInfo.getUserId())
-				.map(data -> data).orElseThrow(() -> new DataNotFoundException(masterMessageSource.getMessage(MASTER_PRODUCT_FINDID_NOTFOUND, new Object[]{id}, LocaleContextHolder.getLocale())));
+					.map(data -> data).orElseThrow(() -> new DataNotFoundException(masterMessageSource
+							.getMessage(MASTER_PRODUCT_FINDID_NOTFOUND, new Object[] { id }, LocaleContextHolder.getLocale())));
 		} else {
 			product = productRepository.findWithLockingById(id)
-				.map(data -> data).orElseThrow(() -> new DataNotFoundException(masterMessageSource.getMessage(MASTER_PRODUCT_FINDID_NOTFOUND, new Object[]{id}, LocaleContextHolder.getLocale())));
+					.map(data -> data).orElseThrow(() -> new DataNotFoundException(masterMessageSource
+							.getMessage(MASTER_PRODUCT_FINDID_NOTFOUND, new Object[] { id }, LocaleContextHolder.getLocale())));
 		}
 		if (product.getVersion() != productUpdateDto.getVersion()) {
-			throw new DataLockException("Database version: " + product.getVersion() + ", Current version: " + productUpdateDto.getVersion());
+			throw new DataLockException(
+					"Database version: " + product.getVersion() + ", Current version: " + productUpdateDto.getVersion());
 		}
 		product.setProductName(productUpdateDto.getProductName());
 		product = productRepository.save(product);
 
 		return productMapper.map(product, ProductDto.class);
- 
+
 	}
 }

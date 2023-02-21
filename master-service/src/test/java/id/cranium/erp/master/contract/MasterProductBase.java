@@ -23,13 +23,14 @@ import id.cranium.erp.starter.exception.RestResponseEntityExceptionHandler;
 import id.cranium.erp.starter.test.security.annotation.WithMockCustomUser;
 import id.cranium.erp.master.MasterSpringBootTest;
 
-@WithMockCustomUser(userId = 12L, username = "user-12", authorities = {"DOMAIN_MENU_PERMISSION","MASTER_PRODUCT_READ"})
-//@ActiveProfiles("master_test")
+@WithMockCustomUser(userId = 12L, username = "user-12", authorities = { "DOMAIN_MENU_PERMISSION",
+        "MASTER_PRODUCT_READ" })
+// @ActiveProfiles("master_test")
 public class MasterProductBase extends MasterSpringBootTest {
-    
+
     @MockBean
     private ProductService productService;
-    
+
     @Autowired
     private ProductController productController;
 
@@ -42,8 +43,8 @@ public class MasterProductBase extends MasterSpringBootTest {
     @BeforeEach
     public void setup() {
         StandaloneMockMvcBuilder standaloneMockMvcBuilder = MockMvcBuilders.standaloneSetup(productController)
-            .setControllerAdvice(new RestResponseEntityExceptionHandler(starterMessageSource))
-            .apply(SecurityMockMvcConfigurers.springSecurity(springSecurityFilterChain));
+                .setControllerAdvice(new RestResponseEntityExceptionHandler(starterMessageSource))
+                .apply(SecurityMockMvcConfigurers.springSecurity(springSecurityFilterChain));
         RestAssuredMockMvc.standaloneSetup(standaloneMockMvcBuilder);
 
         getProductById_should_be_success();
@@ -72,9 +73,9 @@ public class MasterProductBase extends MasterSpringBootTest {
         Long totalStock = 25L;
 
         ProductCreateDto productCreateDto = ProductCreateDto.builder()
-            .productName(productName)
-            .totalStock(totalStock)
-            .build();
+                .productName(productName)
+                .totalStock(totalStock)
+                .build();
 
         ProductDto productDto = new ProductDto();
         productDto.setId(2L);
@@ -88,5 +89,5 @@ public class MasterProductBase extends MasterSpringBootTest {
         productDto.setDeleted(false);
         Mockito.when(productService.createProduct(productCreateDto)).thenReturn(productDto);
     }
-    
+
 }

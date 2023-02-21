@@ -25,7 +25,8 @@ public class ProductController extends MasterServiceController {
     @PostMapping(value = "/product", headers = "X-Api-Version=1")
     @ResponseStatus(value = HttpStatus.CREATED)
     @LogExecutionTime
-    public ProductDto createProduct(@Validated @RequestBody ProductCreateDto productCreateDto) throws DataNotFoundException {
+    public ProductDto createProduct(@Validated @RequestBody ProductCreateDto productCreateDto)
+            throws DataNotFoundException {
         return productService.createProduct(productCreateDto);
     }
 
