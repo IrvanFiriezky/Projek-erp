@@ -10,6 +10,8 @@ module id.cranium.erp.web {
     requires id.cranium.erp.user;
 	requires id.cranium.erp.master.dto;
 	requires id.cranium.erp.master;
+	requires id.cranium.erp.inventory.dto;
+	requires id.cranium.erp.inventory;
 	opens id.cranium.erp.web.webservice to spring.core,spring.beans,spring.context;
 	opens id.cranium.erp.web.configuration to spring.core,spring.beans,spring.context;
 }
