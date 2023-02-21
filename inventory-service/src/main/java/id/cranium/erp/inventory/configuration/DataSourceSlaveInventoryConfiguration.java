@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DataSourceSlaveInventoryConfiguration {
-    
+
     @Bean
     @ConfigurationProperties(prefix = "inventory.spring.slave.datasource")
     public DataSourceProperties inventorySlaveDataSourceProperties() {
@@ -19,7 +19,7 @@ public class DataSourceSlaveInventoryConfiguration {
     @ConfigurationProperties(prefix = "inventory.spring.slave.datasource.hikari")
     public DataSource inventorySlaveDataSource() {
         return inventorySlaveDataSourceProperties()
-          .initializeDataSourceBuilder()
-          .build();
+                .initializeDataSourceBuilder()
+                .build();
     }
 }

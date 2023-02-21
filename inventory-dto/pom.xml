@@ -12,7 +12,7 @@
 	<artifactId>inventory-dto</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>inventory-dto</name>
-	<description>ERP inventory DTO for Spring Boot</description>
+	<description>ERP Inventory DTO for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 		<project-erp-starter-dto.version>0.0.1-SNAPSHOT</project-erp-starter-dto.version>

@@ -28,24 +28,24 @@ public class WebSecurityAdminInventoryConfiguration {
     private String inventoryTokenRequestMacherAdmin;
 
     @Bean
-    public SecurityFilterChain adminInventoryFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain admininventoryFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors().disable()
-            .csrf().disable()
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .and()
-            .securityMatcher(inventoryTokenRequestMacherAdmin + "/**")
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(inventoryTokenRequestMacherAdmin + "/**")
-                .authenticated()
-                .requestMatchers(inventoryTokenRequestMacherAdmin + "/**")
-                .hasRole("ERP_ADMIN")
+                .cors().disable()
+                .csrf().disable()
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
-                .addFilterBefore(adminInventoryJwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-            );
-        
+                .securityMatcher(inventoryTokenRequestMacherAdmin + "/**")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(inventoryTokenRequestMacherAdmin + "/**")
+                        .authenticated()
+                        .requestMatchers(inventoryTokenRequestMacherAdmin + "/**")
+                        .hasRole("ERP_ADMIN")
+                        .and()
+                        .addFilterBefore(adminInventoryJwtAuthorizationFilter,
+                                UsernamePasswordAuthenticationFilter.class));
+
         return http.build();
     }
 

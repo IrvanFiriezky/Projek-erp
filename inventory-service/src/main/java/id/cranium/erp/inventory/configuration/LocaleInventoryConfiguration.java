@@ -7,7 +7,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
 public class LocaleInventoryConfiguration {
-    
+
     @Value("${inventory.spring.messages.basename}")
     private String inventorySpringMessagesBasename;
 

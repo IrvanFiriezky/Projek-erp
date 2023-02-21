@@ -7,7 +7,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import id.cranium.erp.inventory.InventorySpringBootTest;
 
 @SqlGroup({
-	@Sql(value = "classpath:db/test/inventory/h2_inventory_data.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+		@Sql(value = "classpath:db/test/inventory/h2_inventory_data.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 })
 class InventoryServiceApplicationTests extends InventorySpringBootTest {
 

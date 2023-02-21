@@ -14,7 +14,7 @@ import id.cranium.erp.starter.security.JwtAuthorizationFilter;
 @Component
 @RequiredArgsConstructor
 public class InventoryJwtAuthorizationFilter extends OncePerRequestFilter {
- 
+
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Value("${inventory.security.jwt.token.requestMatcher}")

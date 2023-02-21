@@ -20,7 +20,7 @@ import id.cranium.erp.inventory.security.InventoryJwtAuthorizationFilter;
 @RequiredArgsConstructor
 @Order(2)
 public class WebSecurityInventoryConfiguration {
-    
+
     private final InventoryJwtAuthorizationFilter inventoryJwtAuthorizationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -30,20 +30,19 @@ public class WebSecurityInventoryConfiguration {
     @Bean
     public SecurityFilterChain inventoryFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors().disable()
-            .csrf().disable()
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            .and()
-            .securityMatcher(inventoryTokenRequestMacher + "/**")
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(inventoryTokenRequestMacher + "/**")
-                .authenticated()
+                .cors().disable()
+                .csrf().disable()
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
-                .addFilterBefore(inventoryJwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
-            );
-        
+                .securityMatcher(inventoryTokenRequestMacher + "/**")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(inventoryTokenRequestMacher + "/**")
+                        .authenticated()
+                        .and()
+                        .addFilterBefore(inventoryJwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class));
+
         return http.build();
     }
 

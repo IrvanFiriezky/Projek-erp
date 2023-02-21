@@ -10,13 +10,13 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 public class MessageSourceInventoryConfiguration {
-    
+
     @Value("${inventorydto.spring.messages.basename}")
     private String inventoryDtoSpringMessagesBasename;
 
     @Value("${inventorydto.spring.messages.encoding}")
     private String inventoryDtoSpringMessagesEncoding;
-    
+
     @Bean
     public MessageSource inventoryDtoMessageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

@@ -7,7 +7,7 @@ import org.springframework.context.support.SimpleThreadScope;
 
 @Configuration
 public class InventoryTestConfiguration {
-    
+
     @Bean
     public CustomScopeConfigurer inventoryCustomScopeConfigurer() {
         CustomScopeConfigurer configurer = new CustomScopeConfigurer();

@@ -8,14 +8,14 @@ import org.flywaydb.core.Flyway;
 
 @Configuration
 public class FlywayInventoryConfiguration {
-    
+
     @Autowired
     @Qualifier("inventoryFlyway")
     private Flyway flyWay;
 
     @PostConstruct
     public void migrate() {
-        //flyWay.clean();
+        // flyWay.clean();
         flyWay.migrate();
     }
 }

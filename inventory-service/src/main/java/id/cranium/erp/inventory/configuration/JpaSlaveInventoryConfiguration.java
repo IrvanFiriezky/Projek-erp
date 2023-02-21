@@ -19,24 +19,24 @@ import java.util.Objects;
 @Configuration
 @EnableEnversRepositories
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "id.cranium.erp.inventory.repository.slave",
-    entityManagerFactoryRef = "inventorySlaveEntityManagerFactory",
-    transactionManagerRef = "inventorySlaveTransactionManager",
-    repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
+@EnableJpaRepositories(basePackages = "id.cranium.erp.inventory.repository.slave", entityManagerFactoryRef = "inventorySlaveEntityManagerFactory", transactionManagerRef = "inventorySlaveTransactionManager", repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
 @Profile("!tc")
 public class JpaSlaveInventoryConfiguration {
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean inventorySlaveEntityManagerFactory(@Qualifier("inventorySlaveDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder, @Qualifier("inventoryJpaProperties") JpaProperties jpaProperties) {
+    public LocalContainerEntityManagerFactoryBean inventorySlaveEntityManagerFactory(
+            @Qualifier("inventorySlaveDataSource") DataSource dataSource, EntityManagerFactoryBuilder builder,
+            @Qualifier("inventoryJpaProperties") JpaProperties jpaProperties) {
         return builder
-          .dataSource(dataSource)
-          .packages("id.cranium.erp.inventory.entity")
-          .properties(jpaProperties.getProperties())
-          .build();
+                .dataSource(dataSource)
+                .packages("id.cranium.erp.inventory.entity")
+                .properties(jpaProperties.getProperties())
+                .build();
     }
 
     @Bean
-    public PlatformTransactionManager inventorySlaveTransactionManager(@Qualifier("inventorySlaveEntityManagerFactory") LocalContainerEntityManagerFactoryBean inventorySlaveEntityManagerFactory) {
+    public PlatformTransactionManager inventorySlaveTransactionManager(
+            @Qualifier("inventorySlaveEntityManagerFactory") LocalContainerEntityManagerFactoryBean inventorySlaveEntityManagerFactory) {
         return new JpaTransactionManager(Objects.requireNonNull(inventorySlaveEntityManagerFactory.getObject()));
     }
 

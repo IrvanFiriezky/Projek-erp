@@ -13,7 +13,7 @@ import org.flywaydb.core.api.configuration.FluentConfiguration;
 
 @Configuration
 public class DataSourceInventoryConfiguration {
-    
+
     @Bean
     @ConfigurationProperties(prefix = "inventory.spring.datasource")
     public DataSourceProperties inventoryDataSourceProperties() {
@@ -24,8 +24,8 @@ public class DataSourceInventoryConfiguration {
     @ConfigurationProperties(prefix = "inventory.spring.datasource.hikari")
     public DataSource inventoryDataSource() {
         return inventoryDataSourceProperties()
-          .initializeDataSourceBuilder()
-          .build();
+                .initializeDataSourceBuilder()
+                .build();
     }
 
     @Value("${inventory.spring.flyway.locations}")
@@ -38,11 +38,10 @@ public class DataSourceInventoryConfiguration {
     @FlywayDataSource
     public Flyway inventoryFlyway(@Qualifier("inventoryDataSource") DataSource dataSource) {
         return new Flyway(
-            new FluentConfiguration()
-            .locations(flywayLocations)
-            .schemas(flywaySchema)
-            //.outOfOrder(true)
-            .dataSource(dataSource)
-        );
+                new FluentConfiguration()
+                        .locations(flywayLocations)
+                        .schemas(flywaySchema)
+                        // .outOfOrder(true)
+                        .dataSource(dataSource));
     }
 }
