@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>id.cranium.erp.web</groupId>
+	<artifactId>web-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>web-service</name>
+	<description>Web service for Spring Boot</description>
+	<properties>
+		<java.version>17</java.version>
+		<project-erp-cron.version>0.0.1-SNAPSHOT</project-erp-cron.version>
+		<project-erp-starter.version>0.0.1-SNAPSHOT</project-erp-starter.version>
+		<project-erp-user.version>0.0.1-SNAPSHOT</project-erp-user.version>
+		<project-erp-master.version>0.0.1-SNAPSHOT</project-erp-master.version>
+		<project-erp-inventory.version>0.0.1-SNAPSHOT</project-erp-inventory.version>
+		<maven-surefire-plugin.version>3.0.0-M9</maven-surefire-plugin.version>
+		<spring-context.version>6.0.4</spring-context.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring-context.version}</version>
+        </dependency>
+
+		<dependency>
+			<groupId>id.cranium.erp.cron</groupId>
+			<artifactId>cron-service</artifactId>
+			<version>${project-erp-cron.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>id.cranium.erp.starter</groupId>
+			<artifactId>starter-service</artifactId>
+			<version>${project-erp-starter.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>id.cranium.erp.starter</groupId>
+			<artifactId>starter-service</artifactId>
+			<version>${project-erp-starter.version}</version>
+			<classifier>tests</classifier>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>id.cranium.erp.master</groupId>
+			<artifactId>master-service</artifactId>
+			<version>${project-erp-master.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>id.cranium.erp.inventory</groupId>
+			<artifactId>inventory-service</artifactId>
+			<version>${project-erp-inventory.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>id.cranium.erp.user</groupId>
+			<artifactId>user-service</artifactId>
+			<version>${project-erp-user.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>3.0.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+				<configuration>
+					<argLine>
+						--add-opens java.base/java.lang=ALL-UNNAMED
+						--add-opens java.base/java.lang=spring.core
+						--add-opens java.base/java.lang=orika.core
+					</argLine>
+				</configuration>
+            </plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<jvmArguments>
+						--add-opens java.base/java.lang=ALL-UNNAMED
+						--add-opens java.base/java.lang=spring.core
+						--add-opens java.base/java.lang=orika.core
+					</jvmArguments>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>default</spring.profiles.active>
+				<spring.profiles.include>cron,starter,starterdto,user,userdto,master,masterdto,inventory,inventorydto</spring.profiles.include>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<spring.profiles.active>local</spring.profiles.active>
+				<spring.profiles.include>cron_local,starter_local,starterdto_local,user_local,userdto_local,master_local,masterdto_local, inventory_local,inventorydto_local</spring.profiles.include>
+			</properties>
+		</profile>
+		<profile>
+			<id>stage</id>
+			<properties>
+				<spring.profiles.active>stage</spring.profiles.active>
+				<spring.profiles.include>cron_stage,starter_stage,starterdto_stage,user_stage,userdto_stage,master_stage,masterdto_stage,inventory_stage,inventorydto_stage</spring.profiles.include>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+				<spring.profiles.include>cron_prod,starter_prod,starterdto_prod,user_prod,userdto_prod,master_prod,masterdto_prod,inventory_prod,inventorydto_prod</spring.profiles.include>
+			</properties>
+		</profile>
+	</profiles>
+
+</project>

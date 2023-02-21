@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<constraint-mappings
+    xmlns="https://jakarta.ee/xml/ns/validation/mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        https://jakarta.ee/xml/ns/validation/mapping
+        https://jakarta.ee/xml/ns/validation/validation-mapping-3.0.xsd"
+    version="3.0">
+   <!--default-package>com.acme.app.domain</default-package>
+   <bean class="com.acme.common.model.Address">
+       [...]
+    </bean-->
+
+    <constraint-definition annotation="id.cranium.erp.user.validator.constraint.UserMobilePhoneNumber">
+        <validated-by include-existing-validators="false">
+            <value>id.cranium.erp.user.validator.UserMobilePhoneNumberValidator</value>
+        </validated-by>
+    </constraint-definition>
+</constraint-mappings>

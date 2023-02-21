@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>id.cranium</groupId>
+	<artifactId>erp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>erp</name>
+    <description>Cranium ERP for Spring Boot</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>cron-service</module>
+        <module>starter-dto</module>
+        <module>starter-service</module>
+        <module>web-service</module>
+        <module>master-dto</module>
+        <module>master-service</module>
+        <module>inventory-dto</module>
+        <module>inventory-service</module>
+        <module>user-dto</module>
+        <module>user-service</module>
+    </modules>
+
+</project>

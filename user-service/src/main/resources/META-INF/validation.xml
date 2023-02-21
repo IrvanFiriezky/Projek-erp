@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validation-config
+    xmlns="https://jakarta.ee/xml/ns/validation/configuration"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        https://jakarta.ee/xml/ns/validation/configuration
+        https://jakarta.ee/xml/ns/validation/validation-configuration-3.0.xsd"
+    version="3.0">
+    <!--default-provider>com.acme.ACMEProvider</default-provider>
+    <message-interpolator>com.acme.ACMEAwareMessageInterpolator</message-interpolator-->
+
+    <executable-validation enabled="false"/>
+
+    <constraint-mapping>META-INF/validation/user-constraints.xml</constraint-mapping>
+    <!--constraint-mapping>META-INF/validation/catalog-constraints.xml</constraint-mapping>
+    <constraint-mapping>META-INF/validation/customer-constraints.xml</constraint-mapping-->
+
+    <!--property name="com.acme.validation.logging">WARN</property>
+    <property name="com.acme.validation.safetyChecking">failOnError</property-->
+
+</validation-config>
