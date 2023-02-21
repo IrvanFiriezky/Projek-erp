@@ -19,7 +19,6 @@
 		<project-erp-starter.version>0.0.1-SNAPSHOT</project-erp-starter.version>
 		<project-erp-user.version>0.0.1-SNAPSHOT</project-erp-user.version>
 		<project-erp-master.version>0.0.1-SNAPSHOT</project-erp-master.version>
-		<project-erp-inventory.version>0.0.1-SNAPSHOT</project-erp-inventory.version>
 		<maven-surefire-plugin.version>3.0.0-M9</maven-surefire-plugin.version>
 		<spring-context.version>6.0.4</spring-context.version>
 	</properties>
@@ -63,11 +62,6 @@
 			<groupId>id.cranium.erp.master</groupId>
 			<artifactId>master-service</artifactId>
 			<version>${project-erp-master.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>id.cranium.erp.inventory</groupId>
-			<artifactId>inventory-service</artifactId>
-			<version>${project-erp-inventory.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>id.cranium.erp.user</groupId>
@@ -127,28 +121,28 @@
 			</activation>
 			<properties>
 				<spring.profiles.active>default</spring.profiles.active>
-				<spring.profiles.include>cron,starter,starterdto,user,userdto,master,masterdto,inventory,inventorydto</spring.profiles.include>
+				<spring.profiles.include>cron,starter,starterdto,user,userdto,master,masterdto</spring.profiles.include>
 			</properties>
 		</profile>
 		<profile>
 			<id>local</id>
 			<properties>
 				<spring.profiles.active>local</spring.profiles.active>
-				<spring.profiles.include>cron_local,starter_local,starterdto_local,user_local,userdto_local,master_local,masterdto_local, inventory_local,inventorydto_local</spring.profiles.include>
+				<spring.profiles.include>cron_local,starter_local,starterdto_local,user_local,userdto_local,master_local,masterdto_local</spring.profiles.include>
 			</properties>
 		</profile>
 		<profile>
 			<id>stage</id>
 			<properties>
 				<spring.profiles.active>stage</spring.profiles.active>
-				<spring.profiles.include>cron_stage,starter_stage,starterdto_stage,user_stage,userdto_stage,master_stage,masterdto_stage,inventory_stage,inventorydto_stage</spring.profiles.include>
+				<spring.profiles.include>cron_stage,starter_stage,starterdto_stage,user_stage,userdto_stage,master_stage,masterdto_stage</spring.profiles.include>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
 			<properties>
 				<spring.profiles.active>prod</spring.profiles.active>
-				<spring.profiles.include>cron_prod,starter_prod,starterdto_prod,user_prod,userdto_prod,master_prod,masterdto_prod,inventory_prod,inventorydto_prod</spring.profiles.include>
+				<spring.profiles.include>cron_prod,starter_prod,starterdto_prod,user_prod,userdto_prod,master_prod,masterdto_prod</spring.profiles.include>
 			</properties>
 		</profile>
 	</profiles>
